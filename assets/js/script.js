@@ -2,12 +2,47 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
-const curTime = dayjs();
-timeEl = $('#currentDay');
-console.log(curTime);
-$(function () {
-  now();
 
+$(function () {
+  var hrs = 8
+  var curTime = dayjs();
+  const contEL = $('#container')
+  
+  // TODO: Add code to display the current date in the header of the page.
+
+  setInterval(function () {
+    let timeNow = dayjs().format('ddd MMM DD YY HH:mm:ss a');
+    $("#currentDay").text(timeNow);
+  }, 1000);
+  //TODO:Create a function to dynamically generate standard business hr blocks
+  //"standard hours" 9-5
+  for (let i = 0; i < hrs; i++) {
+    var h=i+9;
+    createHrBlock(h)
+  }
+  function createHrBlock(h) {
+    const hourContainer = $("<div>");
+    hourContainer.addClass('row time-block');
+    hourContainer.attr('id', h);
+    contEL.append(hourContainer);
+    const blockTitleDiv = $('<div>');
+    blockTitleDiv.addClass('col-2 col-md-1 hour text-center py-3');
+    blockTitleDiv.text("hour title");
+    const txtArea = $('<textarea>');
+    txtArea.addClass('col-8 col-md-10 description');
+    txtArea.attr('rows', "3");
+    const svBtn = $("<button>");
+    svBtn.addClass("btn saveBtn col-2 col-md-1");
+    svBtn.attr('aria-label', 'save');
+    hourContainer.append(blockTitleDiv, txtArea, svBtn);
+    const iBlock = $('<i>');
+    iBlock.addClass("fas fa-save");
+    iBlock.attr('aria-hidden', 'true');
+    svBtn.append(iBlock);
+
+
+    //const hourTitleDiv = $("<div>").text(availableHours[i]).addClass("col-2 col-md-1 hour text-center py-3");
+  }
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -16,6 +51,7 @@ $(function () {
   // useful when saving the description in local storage?
   //
   // TODO: Add code to apply the past, present, or future class to each time
+  
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
@@ -25,12 +61,7 @@ $(function () {
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
-  // TODO: Add code to display the current date in the header of the page.
-  function now() {
-    setInterval(() => {
-      timeEl.text(curTime.format('MMM D, YYYY, h:mm:ss a'));
-      console.log(curTime);
-    }, 1000);
-  }
+
+
 
 });

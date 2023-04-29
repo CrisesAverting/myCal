@@ -14,7 +14,7 @@ Jquery calendar
 Jquery Calendar
 
 ## Links
-https://crisesaverting.github.io/bookish-gambino/
+
 
 ## Purpose
 
