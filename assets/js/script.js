@@ -3,14 +3,8 @@
 // in the html.
 
 // let activities = JSON.parse(localStorage.getItem(storedSchedule))
-var activities;
+var activities = JSON.parse(localStorage.getItem("storedSchedule")) || [];
 console.log(activities);
-if (localStorage.getItem("storedSchedule") === null) {
-  activities = [];
-} else {
-  activities = JSON.parse(localStorage.getItem("storedSchedule"));
-  console.log(activities);
-}
 
 $(function () {
   var hrs = 8;
@@ -43,6 +37,7 @@ $(function () {
     txtArea.addClass('col-8 col-md-10 description');
     txtArea.attr('rows', "3");
     txtArea.attr('id', h + "-txt")
+    txtArea.text(getActivities(h));
     const svBtn = $("<button>");
     svBtn.addClass("btn saveBtn col-2 col-md-1");
     svBtn.attr('aria-label', 'save');
@@ -52,7 +47,7 @@ $(function () {
     iBlock.attr('aria-hidden', 'true');
     svBtn.append(iBlock);
     applyTime(h)
-    getActivities(h);
+    
 
   }
   // localStorage.clear()
@@ -66,7 +61,7 @@ $(function () {
   contEL.on('click', '.saveBtn', function (event) {
     const parID = $(this).parent().attr('id');
     var idEL = $('#' + parID);
-    // console.log(parID);
+    console.log(parID);
     var txtA = (idEL.children().eq(1).val());
     const activ = {
       time: parID,
@@ -103,18 +98,13 @@ $(function () {
 
 
   function getActivities(k) {
-    // activities = JSON.parse(localStorage.getItem("storedSchedule"))
-    if (activities.length === 0) {
-      console.log("No activities yet");
-    } else if(activities[k]!== null) {
-      var cur = $("#" + k - 9 + "-txt")
-      console.log(cur);
-      console.log(k - 9);
-    }else {
+    if (activities.length === 0 || !activities[k-9]) {
+     return ""
       
-
+    } else  { 
+      var activeTxt = activities[k-9].evt;
+      return activeTxt
     }
-
   }
 
 });
