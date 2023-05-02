@@ -7,6 +7,8 @@ $(function () {
   var hrs = 8
   var curHr = dayjs().hour();
   const contEL = $('#container')
+  // let activities = JSON.parse(localStorage.getItem(storedSchedule))
+  var activities = []
 
   // TODO: Add code to display the current date in the header of the page.
 
@@ -21,6 +23,12 @@ $(function () {
     createHrBlock(h)
   }
   function createHrBlock(h) {
+    if (activities.length === 0) {
+      console.log("no activities")
+    } else {
+      curTxt = activities[h]
+      console.log(curTxt)
+    }
     const hourContainer = $("<div>");
     hourContainer.addClass('row time-block');
     hourContainer.attr('id', h);
@@ -29,7 +37,6 @@ $(function () {
     blockTitleDiv.addClass('col-2 col-md-1 hour text-center py-3');
     blockTitleDiv.text(h);
     const txtArea = $('<textarea>');
-    // textArea =
     txtArea.addClass('col-8 col-md-10 description');
     txtArea.attr('rows', "3");
     const svBtn = $("<button>");
@@ -41,7 +48,14 @@ $(function () {
     iBlock.attr('aria-hidden', 'true');
     svBtn.append(iBlock);
     applyTime(h)
+    console.log(activities.length)
+    const curTxt = txtArea.text
+
+
+    // getActivities(h);
+
   }
+  // localStorage.clear()
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -49,37 +63,55 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
-contEL.on('click', '.saveBtn', function (event) {
-  const parID = $(this).parent().attr('id');
-  var idEL = $('#' + parID);
-  // console.log(parID);
-  var txtA = (idEL.children().eq(1).val());
-  localStorage.setItem("activity", txtA);
-  console.log(txtA);
-  //send entered text to local storage from id.textarea
-  // console.log(idEL.children());
-})
+  contEL.on('click', '.saveBtn', function (event) {
+    const parID = $(this).parent().attr('id');
+    var idEL = $('#' + parID);
+    // console.log(parID);
+    var txtA = (idEL.children().eq(1).val());
+    const activ = {
+      time: parID,
+      activity: txtA
+    }
+    activities[parID - 9] = activ;
+    localStorage.setItem("storedSchedule", JSON.stringify(activities));
+    console.log(txtA);
+    //send entered text to local storage from id.textarea
+    // console.log(idEL.children());
+
+  })
   // TODO: Add code to apply the past, present, or future class to each time
   function applyTime(h) {
     if (h < curHr && h > 8) {
-      $("#"+h).addClass('past');
+      $("#" + h).addClass('past');
     } else if (h === curHr) {
       $("#" + h).addClass('present');
     } else {
       $("#" + h).addClass('future');
-    } 
+    }
 
   }
+
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
   // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
+  // current hour in 24-hour time
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
   //
 
 
+
+  // function getActivities(h) {
+  //   activities = JSON.parse(localStorage.getItem("storedSchedule"))
+  //   if (activities.length === 0) {
+  //     console.log("No activities yet");
+  //   } else {
+  //     console.log(activities[h])
+  //     curEl = 
+  //     $().text = activities[h - 9].activity;
+  //   }
+
+  // }
 
 });
