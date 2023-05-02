@@ -2,13 +2,21 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 
+// let activities = JSON.parse(localStorage.getItem(storedSchedule))
+var activities;
+console.log(activities);
+if (localStorage.getItem("storedSchedule") === null) {
+  activities = [];
+} else {
+  activities = JSON.parse(localStorage.getItem("storedSchedule"));
+  console.log(activities);
+}
 
 $(function () {
-  var hrs = 8
+  var hrs = 8;
   var curHr = dayjs().hour();
   const contEL = $('#container')
-  // let activities = JSON.parse(localStorage.getItem(storedSchedule))
-  var activities = []
+
 
   // TODO: Add code to display the current date in the header of the page.
 
@@ -23,22 +31,18 @@ $(function () {
     createHrBlock(h)
   }
   function createHrBlock(h) {
-    if (activities.length === 0) {
-      console.log("no activities")
-    } else {
-      curTxt = activities[h]
-      console.log(curTxt)
-    }
+
     const hourContainer = $("<div>");
     hourContainer.addClass('row time-block');
     hourContainer.attr('id', h);
     contEL.append(hourContainer);
     const blockTitleDiv = $('<div>');
     blockTitleDiv.addClass('col-2 col-md-1 hour text-center py-3');
-    blockTitleDiv.text(h);
+    blockTitleDiv.text(h + ":00");
     const txtArea = $('<textarea>');
     txtArea.addClass('col-8 col-md-10 description');
     txtArea.attr('rows', "3");
+    txtArea.attr('id', h + "-txt")
     const svBtn = $("<button>");
     svBtn.addClass("btn saveBtn col-2 col-md-1");
     svBtn.attr('aria-label', 'save');
@@ -48,11 +52,7 @@ $(function () {
     iBlock.attr('aria-hidden', 'true');
     svBtn.append(iBlock);
     applyTime(h)
-    console.log(activities.length)
-    const curTxt = txtArea.text
-
-
-    // getActivities(h);
+    getActivities(h);
 
   }
   // localStorage.clear()
@@ -70,7 +70,7 @@ $(function () {
     var txtA = (idEL.children().eq(1).val());
     const activ = {
       time: parID,
-      activity: txtA
+      evt: txtA
     }
     activities[parID - 9] = activ;
     localStorage.setItem("storedSchedule", JSON.stringify(activities));
@@ -102,16 +102,19 @@ $(function () {
 
 
 
-  // function getActivities(h) {
-  //   activities = JSON.parse(localStorage.getItem("storedSchedule"))
-  //   if (activities.length === 0) {
-  //     console.log("No activities yet");
-  //   } else {
-  //     console.log(activities[h])
-  //     curEl = 
-  //     $().text = activities[h - 9].activity;
-  //   }
+  function getActivities(k) {
+    // activities = JSON.parse(localStorage.getItem("storedSchedule"))
+    if (activities.length === 0) {
+      console.log("No activities yet");
+    } else if(activities[k]!== null) {
+      var cur = $("#" + k - 9 + "-txt")
+      console.log(cur);
+      console.log(k - 9);
+    }else {
+      
 
-  // }
+    }
+
+  }
 
 });
