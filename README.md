@@ -11,16 +11,17 @@ Jquery calendar
 * [Credits](#credits)
 ## Description
 
-Jquery Calendar
+Jquery based Calendar with color coded past present and future events
 
 ## Links
-
+https://crisesaverting.github.io/myCal/
 
 ## Purpose
 
-Jquery Calendar
+Jquery day planner.
 
 ## Screenshots
+<img src='./assets/images/mycal.png'>
 
 ## Technologies
 
@@ -29,6 +30,8 @@ Jquery Calendar
 <img src="https://img.shields.io/badge/Built%20with-CSS3-blue">
 
 <img src="https://img.shields.io/badge/Built%20with-Javascript-blue">
+
+<img src="https://img.shields.io/badge/Built%20with-jQuery-blue">
 
 ## License
 
